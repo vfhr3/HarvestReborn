@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b48fbce5c597534e89ad0301aa32617, type: 3}
+  m_Name: New Weapon
+  m_EditorClassIdentifier: Assembly-CSharp::Weapons.WeaponData
+  weaponName: Shovel
+  icon: {fileID: 1737672109, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
+  description: 
+  baseDamage: 1
+  baseFireRate: 1
+  baseProjectileCount: 1
+  baseProjectileSpeed: 10
+  baseRange: 15
+  baseArea: 1
+  targetingMode: 0
+  projectilePrefab: {fileID: 1528787968147350959, guid: 5b19ab6a13ce2fe4bb081e2ca662233a,
+    type: 3}
+  piercing: 1
+  pierceCount: 100
