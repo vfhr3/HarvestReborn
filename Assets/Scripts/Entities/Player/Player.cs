@@ -1,5 +1,3 @@
-using System;
-using Core.Models;
 using Core.Systems;
 using Entities.Player.Data;
 using Entities.Player.Input;
@@ -11,24 +9,26 @@ namespace Entities.Player
     {
         private IInputSource _inputSource;
         
-        public override void Initialize(PlayerContext context)
+        public override void Initialize(PlayerContext playerContext)
         {
             Debug.Log("Initializing Player...", this);
             _inputSource = new KeyBoardInput();
             
-            base.Initialize(context);
+            base.Initialize(playerContext);
             
             Debug.Log("Player Initialized!", this);
         }
 
-        public void Update()
+        public override void Update()
         {
-            Context.Update(Time.deltaTime);
+            base.Update();
         }
 
-        public void FixedUpdate()
+        public override void FixedUpdate()
         {
-            Context.FixedUpdate(Time.fixedDeltaTime);
+            context.UpdateDirection(_inputSource.GetDirection());
+
+            base.FixedUpdate();
         }
     }
 }

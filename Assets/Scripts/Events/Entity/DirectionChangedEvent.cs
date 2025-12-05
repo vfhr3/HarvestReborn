@@ -1,12 +1,14 @@
-﻿namespace Events.Entity
+﻿using UnityEngine;
+
+namespace Events.Entity
 {
     public class DirectionChangedEvent : IEventData
     {
-        public DirectionChangedEvent(bool isFacingRight)
+        public DirectionChangedEvent(Vector2 direction)
         {
-            IsFacingRight = isFacingRight;
+            Direction = direction;
         }
 
-        public bool IsFacingRight { get; }
+        public Vector2 Direction { get; }
     }
 }

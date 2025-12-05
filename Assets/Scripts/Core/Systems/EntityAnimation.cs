@@ -15,23 +15,11 @@ namespace Core.Systems
 
         private EntityContext _context;
 
-        private void OnDestroy()
+        public override void Initialize(EntityContext playerContext)
         {
-            if (_context != null)
-            {
-                _context.Events.Off<HealthChangedEvent>(UpdateHealthParameter);
-                _context.Events.Off<MovementStartedEvent>(HandleMovementStarted);
-                _context.Events.Off<MovementStoppedEvent>(HandleMovementStopped);
-                _context.Events.Off<DeathEvent>(PlayDeathAnimation);
-            }
-        }
-
-        public override void Initialize(EntityContext context)
-        {
-            _context = context;
-
-            if (animator == null)
-                animator = GetComponent<Animator>();
+            _context = playerContext; 
+            
+            animator ??= GetComponent<Animator>();
 
             _context.Events.On<HealthChangedEvent>(UpdateHealthParameter);
             _context.Events.On<MovementStartedEvent>(HandleMovementStarted);
@@ -39,6 +27,14 @@ namespace Core.Systems
             _context.Events.On<DeathEvent>(PlayDeathAnimation);
 
             animator.SetInteger(HealthParam, _context.Health.Current);
+        }
+
+        public override void Cleanup()
+        {
+            _context.Events.Off<HealthChangedEvent>(UpdateHealthParameter);
+            _context.Events.Off<MovementStartedEvent>(HandleMovementStarted);
+            _context.Events.Off<MovementStoppedEvent>(HandleMovementStopped);
+            _context.Events.Off<DeathEvent>(PlayDeathAnimation);
         }
 
         private void UpdateHealthParameter(HealthChangedEvent eventData)

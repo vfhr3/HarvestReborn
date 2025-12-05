@@ -1,18 +1,17 @@
 ﻿using Abstractions.Entity;
 using Events.Entity;
 
-namespace Core.StateMachine
+namespace Core.StateMachine.Life
 {
-    public class IdleState : IEntityState
+    public class DeadState : IEntityState
     {
         public void Enter(IEntityContext context)
         {
-            context.Events.Emit(new MovementStoppedEvent());
+            context.Events.Emit(new DeathEvent());
         }
 
         public IEntityState Update(IEntityContext context, float deltaTime)
         {
-            if (context.Movement.IsMoving) return new MovingState();
             return this;
         }
 

@@ -1,25 +1,42 @@
-﻿using System;
-using Abstractions;
+﻿using Abstractions;
 using Core.Entity;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Core.Systems
 {
     public abstract class Entity<TContext> : ContextDrivenComponent<TContext> where TContext : EntityContext
     {
         [SerializeField] protected TContext context;
+        
         public TContext Context => context;
         public override void Initialize(TContext entityContext)
         {
-            Debug.Log("Initializing Entity...", this);
-            this.context = entityContext;
+            context = entityContext;
+            
             foreach (var component in GetComponents<ContextDrivenComponent<EntityContext>>())
             {
                 component.Initialize(context);
             }
+        }
 
-            Debug.Log("Entity Initialized!", this);
+        public override void Cleanup()
+        {
+            foreach (var component in GetComponents<ContextDrivenComponent<EntityContext>>())
+            {
+                component.Cleanup();
+            }
+        }
+
+        public virtual void Update()
+        {
+            var deltaTime = Time.deltaTime;
+            context.Update(deltaTime);
+        }
+
+        public virtual void FixedUpdate()
+        {
+            var deltaTime = Time.fixedDeltaTime;
+            context.FixedUpdate(deltaTime);
         }
     }
 }

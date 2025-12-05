@@ -12,16 +12,10 @@ namespace Core.Systems
 
         private EntityContext _context;
         private Coroutine _flashCoroutine;
-
-        private void OnDestroy()
+        
+        public override void Initialize(EntityContext playerContext)
         {
-            _context.Events.Off<DirectionChangedEvent>(Flip);
-            _context.Events.Off<GracePeriodStartedEvent>(Flash);
-        }
-
-        public override void Initialize(EntityContext context)
-        {
-            _context = context;
+            _context = playerContext;
 
             spriteRenderer ??= GetComponent<SpriteRenderer>();
 
@@ -29,9 +23,15 @@ namespace Core.Systems
             _context.Events.On<GracePeriodStartedEvent>(Flash);
         }
 
+        public override void Cleanup()
+        {
+            _context.Events.Off<DirectionChangedEvent>(Flip);
+            _context.Events.Off<GracePeriodStartedEvent>(Flash);
+        }
+
         private void Flip(DirectionChangedEvent e)
         {
-            spriteRenderer.flipX = !e.IsFacingRight;
+            spriteRenderer.flipX = e.Direction.x < 0;
         }
 
         private IEnumerator FlashCoroutine(float duration, float interval)

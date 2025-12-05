@@ -10,10 +10,18 @@ namespace Core.Systems
         private EntityContext _context;
         private Rigidbody2D _rb;
 
-        public override void Initialize(EntityContext context)
+        public override void Initialize(EntityContext playerContext)
         {
-            context.Events.On<PositionChangedEvent>(Move);
+            _context = playerContext;
+            _context.Events.On<PositionChangedEvent>(Move);
+            _rb = GetComponent<Rigidbody2D>();
         }
+
+        public override void Cleanup()
+        {
+            _context.Events.Off<PositionChangedEvent>(Move);
+        }
+
         private void Move(PositionChangedEvent eventData)
         {
             _rb.MovePosition(eventData.NewPosition);

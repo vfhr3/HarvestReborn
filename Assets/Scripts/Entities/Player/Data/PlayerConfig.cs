@@ -8,7 +8,7 @@ namespace Entities.Player.Data
     {
         public int MaxHealth { get; set; }
         public float GracePeriodDuration { get; set; }
-        public float Speed { get; set; }
+        public float Speed { get; set; } = 5;
         public PlayerContext GetContext()
         {
             return new PlayerContext(this);

@@ -1,4 +1,5 @@
-﻿using Abstractions.Entity;
+﻿using Abstractions;
+using Abstractions.Entity;
 
 namespace Core.StateMachine
 {

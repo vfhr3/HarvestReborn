@@ -7,9 +7,14 @@ namespace Core.Systems
     {
         private EntityContext _context;
         
-        public override void Initialize(EntityContext context)
+        public override void Initialize(EntityContext playerContext)
         {
-            _context = context;
+            _context = playerContext;
+        }
+
+        public override void Cleanup()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
