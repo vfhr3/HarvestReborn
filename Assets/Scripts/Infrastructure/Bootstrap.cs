@@ -8,7 +8,7 @@ namespace Infrastructure
 {
     public class Bootstrap : MonoBehaviour
     {
-        [SerializeField] private HealthBar healthBar;
+        [SerializeField] private HealthBar healthBarPrefab;
         [SerializeField] private Player playerPrefab;
         [SerializeField] private Grid terrainPrefab;
         [SerializeField] private Enemy enemyPrefab;
@@ -18,6 +18,10 @@ namespace Infrastructure
         {
             var player = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             _player = player;
+            var healthBar = Instantiate(healthBarPrefab, Vector3.zero, Quaternion.identity);
+            healthBar.GetComponent<HealthBar>().Init(_player.Context);
+            
+            Destroy(gameObject);
         }
 
         [ContextMenu("Create Enemy")]

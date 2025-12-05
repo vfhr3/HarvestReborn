@@ -1,4 +1,5 @@
-﻿using Abstractions;
+﻿using System;
+using Abstractions;
 using Core.Models;
 using Core.StateMachine;
 using Events;
@@ -9,46 +10,50 @@ namespace Core.Entity
 {
     public abstract class EntityContext : IDamageable
     {
-        private readonly EntityStateMachine _movementState;
-        private readonly GracePeriod _gracePeriod;
+        public readonly EntityStateMachine MovementState;
+        public readonly GracePeriod GracePeriod;
         private readonly Health _health;
-        private readonly Movement _movement;
-        private Vector2 _position;
+        public readonly Movement Movement;
+        public Vector2 Position;
         
         private bool _isFacingRight = true;
 
         protected EntityContext(EntityConfig config, Vector2 initialPosition)
         {
             _health = new Health(config.MaxHealth);
-            _gracePeriod = new GracePeriod(config.GracePeriodDuration);
-            _movement = new Movement(config.MovementSpeed);
-            _position = initialPosition;
+            GracePeriod = new GracePeriod(config.GracePeriodDuration);
+            Movement = new Movement(config.MovementSpeed);
+            Position = initialPosition;
             
             Events = new EventBus();
-            _movementState = new EntityStateMachine(this, new IdleState());
+            MovementState = new EntityStateMachine(this, new IdleState());
         }
 
         // Health Exposed
         public bool IsDead => _health.IsDead;
         public Health Health => _health;
-        public bool IsMoving => _movement.Direction.magnitude > 0;
+        public bool IsMoving => Movement.Direction.magnitude > 0;
 
 
         public EventBus Events { get; }
 
         public void TakeDamage(int damage)
         {
-            if (_gracePeriod.IsActive || IsDead) return;
+            if (GracePeriod.IsActive || IsDead) return;
 
             var oldHealth = _health.Current;
             _health.TakeDamage(damage);
             Events.Emit(new DamageTakenEvent(damage, oldHealth, _health.Current, _health.IsDead));
+            Events.Emit(new HealthChangedEvent(Math.Abs(oldHealth - _health.Current), oldHealth, _health.Current));
+            StartGracePeriod();
+            
+            if (IsDead) Events.Emit(new DeathEvent());
         }
 
         public virtual void Update(float deltaTime)
         {
-            _gracePeriod.Update(deltaTime);
-            _movementState.Update(deltaTime);
+            GracePeriod.Update(deltaTime);
+            MovementState.Update(deltaTime);
         }
 
         public virtual void FixedUpdate(float fixedDeltaTime)
@@ -58,19 +63,19 @@ namespace Core.Entity
 
         private void Move(float fixedDeltaTime)
         {
-            var oldPosition = _position;
-            var newPosition = oldPosition + _movement.Direction * (_movement.Speed * fixedDeltaTime);
+            var oldPosition = Position;
+            var newPosition = oldPosition + Movement.Direction * (Movement.Speed * fixedDeltaTime);
 
             if (IsMoving)
             {
-                _position = newPosition;
+                Position = newPosition;
                 Events.Emit(new PositionChangedEvent(oldPosition, newPosition));
             }
         }
 
         public void UpdateDirection(Vector2 direction)
         {
-            _movement.Direction = direction;
+            Movement.Direction = direction;
 
             if (direction.x != 0)
             {
@@ -81,6 +86,13 @@ namespace Core.Entity
                     Events.Emit(new DirectionChangedEvent(_isFacingRight));
                 }
             }
+        }
+
+        private void StartGracePeriod()
+        {
+            if (GracePeriod.IsActive) return;
+            GracePeriod.Start();
+            Events.Emit(new GracePeriodStartedEvent(GracePeriod.Duration));
         }
     }
 }

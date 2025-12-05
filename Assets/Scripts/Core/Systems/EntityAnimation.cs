@@ -9,6 +9,7 @@ namespace Core.Systems
         private static readonly int HealthParam = Animator.StringToHash("Health");
         private static readonly int IsMovingParam = Animator.StringToHash("IsMoving");
         private static readonly int DeathTrigger = Animator.StringToHash("Death");
+        
         [SerializeField] private Animator animator;
 
         private EntityContext _context;

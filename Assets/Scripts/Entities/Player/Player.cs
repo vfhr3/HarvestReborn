@@ -34,5 +34,12 @@ namespace Entities.Player
         {
             return _inputSource.GetDirection();
         }
+
+        [ContextMenu("Take 10 Damage")]
+        public void TakeDamage_Test()
+        {
+            Context.TakeDamage(10);
+            Debug.Log(Context.Health.Current);
+        }
     }
 }
