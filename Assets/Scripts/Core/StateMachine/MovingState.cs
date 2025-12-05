@@ -1,24 +1,22 @@
-﻿using Abstractions;
-using Abstractions.Common;
-using Core.Entity;
+﻿using Abstractions.Entity;
 using Events.Entity;
 
 namespace Core.StateMachine
 {
-    public class MovingState : IEntityState<IMoveable>
+    public class MovingState : IEntityState
     {
-        public void Enter(IMoveable context)
+        public void Enter(IEntityContext context)
         {
             context.Events.Emit(new MovementStartedEvent());
         }
 
-        public IEntityState<IMoveable> Update(IMoveable context, float deltaTime)
+        public IEntityState Update(IEntityContext context, float deltaTime)
         {
-            if (!context.IsMoving) return new IdleState();
+            if (!context.Movement.IsMoving) return new IdleState();
             return this;
         }
 
-        public void Exit(IMoveable context)
+        public void Exit(IEntityContext context)
         {
             
         }

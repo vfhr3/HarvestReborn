@@ -1,5 +1,4 @@
-﻿using Core.Entity;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Abstractions
 {

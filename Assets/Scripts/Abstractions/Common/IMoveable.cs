@@ -7,6 +7,6 @@ namespace Abstractions.Common
     {
         public bool IsMoving { get; set; }
         public EntityContext Context { get; set; }
-        void Move(Vector2 direciton);
+        void Move(Vector2 direction);
     }
 }

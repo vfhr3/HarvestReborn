@@ -56,7 +56,7 @@ namespace Core.Systems
             animator.SetBool(IsMovingParam, false);
         }
 
-        public void PlayDeathAnimation(DeathEvent eventData)
+        private void PlayDeathAnimation(DeathEvent eventData)
         {
             animator.SetTrigger(DeathTrigger);
         }

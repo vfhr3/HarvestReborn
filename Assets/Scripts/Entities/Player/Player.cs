@@ -1,43 +1,34 @@
-using Core.Entity;
+using System;
+using Core.Models;
 using Core.Systems;
 using Entities.Player.Data;
 using Entities.Player.Input;
 using UnityEngine;
-using Utils;
 
 namespace Entities.Player
 {
-    public class Player : Entity<PlayerContext, PlayerConfig>
+    public class Player : Entity<PlayerContext>
     {
         private IInputSource _inputSource;
-        private Entity<PlayerContext, PlayerConfig> _entityImplementation;
         
         public override void Initialize(PlayerContext context)
         {
+            Debug.Log("Initializing Player...", this);
+            _inputSource = new KeyBoardInput();
             
+            base.Initialize(context);
+            
+            Debug.Log("Player Initialized!", this);
         }
-        
-        protected override PlayerConfig CreateConfig()
+
+        public void Update()
         {
-            return EntityConfigBuilder<PlayerConfig>.Create()
-                .SetHealth(100)
-                .SetMovementSpeed(5)
-                .SetGracePeriodDuration(0.3f)
-                .Build();
+            Context.Update(Time.deltaTime);
         }
 
-        protected override PlayerContext CreateContext(PlayerConfig config)
+        public void FixedUpdate()
         {
-            return new PlayerContext(config, transform.position);
+            Context.FixedUpdate(Time.fixedDeltaTime);
         }
-
-
-        [ContextMenu("Take 10 Damage")]
-        public void TakeDamage_Test()
-        {
-            Context.TakeDamage(10);
-            Debug.Log(Context.Health.Current);
-        }
-
     }
 }

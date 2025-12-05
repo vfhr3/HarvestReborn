@@ -1,11 +1,11 @@
-﻿using Core.Entity;
+﻿using Abstractions.Entity;
 
 namespace Core.StateMachine
 {
-    public interface IEntityState<T>
+    public interface IEntityState
     {
-        public void Enter(T context);
-        public IEntityState<T> Update(T context, float deltaTime);
-        public void Exit(T context);
+        public void Enter(IEntityContext context);
+        public IEntityState Update(IEntityContext context, float deltaTime);
+        public void Exit(IEntityContext context);
     }
 }

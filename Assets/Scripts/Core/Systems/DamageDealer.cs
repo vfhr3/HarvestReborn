@@ -1,6 +1,5 @@
 ﻿using Abstractions;
 using Core.Entity;
-using UnityEngine;
 
 namespace Core.Systems
 {

@@ -1,26 +1,25 @@
-﻿using Abstractions;
+﻿using System;
+using Abstractions;
 using Core.Entity;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.Systems
 {
-    public abstract class Entity<TContext, TConfig> : ContextDrivenComponent<TContext>
-        where TContext : EntityContext
-        where TConfig : class
+    public abstract class Entity<TContext> : ContextDrivenComponent<TContext> where TContext : EntityContext
     {
-        protected TConfig Config;
-        public TContext Context;
-        protected virtual void Update()
+        [SerializeField] protected TContext context;
+        public TContext Context => context;
+        public override void Initialize(TContext entityContext)
         {
-            Context.Update(Time.deltaTime);
-        }
+            Debug.Log("Initializing Entity...", this);
+            this.context = entityContext;
+            foreach (var component in GetComponents<ContextDrivenComponent<EntityContext>>())
+            {
+                component.Initialize(context);
+            }
 
-        protected virtual void Initialize()
-        {
-            
+            Debug.Log("Entity Initialized!", this);
         }
-        
-        protected abstract TConfig CreateConfig();
-        protected abstract TContext CreateContext(TConfig config);
     }
 }

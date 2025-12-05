@@ -1,9 +1,13 @@
-﻿namespace Core.Entity
+﻿using Abstractions.Entity;
+
+namespace Core.Entity
 {
-    public abstract class EntityConfig
+    public interface IEntityConfig<out TContext> where TContext : IEntityContext
     {
         public int MaxHealth { get; set; }
-        public float GracePeriodDuration { get; set; } = 0;
-        public float MovementSpeed { get; set; } = 1;
+        public float GracePeriodDuration { get; set; }
+        public float Speed { get; set; }
+
+        public TContext GetContext();
     }
 }

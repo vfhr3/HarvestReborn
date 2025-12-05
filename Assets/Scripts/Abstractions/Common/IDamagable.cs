@@ -1,4 +1,4 @@
-﻿namespace Abstractions
+﻿namespace Abstractions.Common
 {
     public interface IDamageable
     {

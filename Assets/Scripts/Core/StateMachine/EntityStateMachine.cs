@@ -1,20 +1,20 @@
-﻿using Core.Entity;
+﻿using Abstractions.Entity;
 
 namespace Core.StateMachine
 {
-    public class EntityStateMachine<T>
+    public class EntityStateMachine
     {
-        private readonly T _context;
+        private readonly IEntityContext _context;
 
-        public EntityStateMachine(T context, IEntityState<T> initialState)
+        public EntityStateMachine(IEntityContext context, IEntityState initialState)
         {
             _context = context;
             ChangeState(initialState);
         }
 
-        private IEntityState<T> Current { get; set; }
+        private IEntityState Current { get; set; }
 
-        private void ChangeState(IEntityState<T> newState)
+        private void ChangeState(IEntityState newState)
         {
             Current?.Exit(_context);
             Current = newState;

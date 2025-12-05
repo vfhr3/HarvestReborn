@@ -4,8 +4,14 @@ using Core.Entity;
 namespace Entities.Player.Data
 {
     [Serializable]
-    public class PlayerConfig : EntityConfig
+    public class PlayerConfig : IEntityConfig<PlayerContext>
     {
-        public int StargingLevel { get; set; }
+        public int MaxHealth { get; set; }
+        public float GracePeriodDuration { get; set; }
+        public float Speed { get; set; }
+        public PlayerContext GetContext()
+        {
+            return new PlayerContext(this);
+        }
     }
 }

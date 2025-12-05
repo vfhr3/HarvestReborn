@@ -1,5 +1,6 @@
 ﻿using Entities.Enemies;
 using Entities.Player;
+using Entities.Player.Data;
 using Infrastructure.Factories;
 using UI;
 using UnityEngine;
@@ -17,9 +18,18 @@ namespace Infrastructure
         private void Awake()
         {
             var player = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            _player = player;
+
+            var playerEntity = player.GetComponent<Player>();
+            var playerConfig = new PlayerConfig()
+            {
+                GracePeriodDuration = 0.3f,
+                MaxHealth = 100,
+                Speed = 5
+            };
+            playerEntity.Initialize(new ContextFactory<PlayerContext>().From(playerConfig, new Vector2(0, 0)));
+            
             var healthBar = Instantiate(healthBarPrefab, Vector3.zero, Quaternion.identity);
-            healthBar.GetComponent<HealthBar>().Init(_player.Context);
+            healthBar.Init(playerEntity.Context);
             
             Destroy(gameObject);
         }
@@ -27,7 +37,7 @@ namespace Infrastructure
         [ContextMenu("Create Enemy")]
         private void CreateEnemy()
         {
-            var enemy = EnemyFactory.Create(new Vector3(0, 5, 0));
+            EnemyFactory.Create(new Vector3(0, 5, 0));
         }
     }
 }
