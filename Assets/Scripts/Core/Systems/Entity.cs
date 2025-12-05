@@ -1,4 +1,5 @@
-﻿using Core.Entity;
+﻿using Abstractions;
+using Core.Entity;
 using UnityEngine;
 
 namespace Core.Systems
@@ -33,7 +34,7 @@ namespace Core.Systems
 
         public void Initialize()
         {
-            foreach (var system in GetComponents<IEntitySystem>())
+            foreach (var system in GetComponents<DataDrivenComponent<EntityContext>>())
             {
                 system.Initialize(Context);
             }
