@@ -4,20 +4,17 @@ using UnityEngine;
 
 namespace Core.Systems
 {
-    public class DamageableEntity : MonoBehaviour, IDamageable
+    public class DamageableEntity : ContextDrivenComponent<IDamageable>
     {
-        private EntityContext _context;
+        private IDamageable _context;
 
-        public bool IsDead => _context.IsDead;
-
+        public override void Initialize(IDamageable context)
+        {
+            _context = context;
+        }
         public void TakeDamage(int damage)
         {
             _context.TakeDamage(damage);
-        }
-
-        public void Init(EntityContext context)
-        {
-            _context = context;
         }
     }
 }

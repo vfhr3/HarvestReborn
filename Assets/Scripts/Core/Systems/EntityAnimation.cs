@@ -1,10 +1,11 @@
-﻿using Core.Entity;
+﻿using Abstractions;
+using Core.Entity;
 using Events.Entity;
 using UnityEngine;
 
 namespace Core.Systems
 {
-    public class EntityAnimation : MonoBehaviour, IEntitySystem
+    public class EntityAnimation : ContextDrivenComponent<EntityContext>
     {
         private static readonly int HealthParam = Animator.StringToHash("Health");
         private static readonly int IsMovingParam = Animator.StringToHash("IsMoving");
@@ -25,7 +26,7 @@ namespace Core.Systems
             }
         }
 
-        public void Initialize(EntityContext context)
+        public override void Initialize(EntityContext context)
         {
             _context = context;
 

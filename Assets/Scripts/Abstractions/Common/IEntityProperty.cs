@@ -1,7 +1,10 @@
-﻿namespace Abstractions
+﻿using Core.Entity;
+using Events;
+
+namespace Abstractions
 {
-    public class IEntityProperty
+    public interface IEntityProperty
     {
-        
+        public EventBus Events { get; }
     }
 }

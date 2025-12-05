@@ -1,13 +1,14 @@
-﻿using Core.Entity;
+﻿using Abstractions;
+using Core.Entity;
 using UnityEngine;
 
 namespace Core.Systems
 {
-    public class DamageDealer : MonoBehaviour, IEntitySystem
+    public class DamageDealer : ContextDrivenComponent<EntityContext>
     {
         private EntityContext _context;
         
-        public void Initialize(EntityContext context)
+        public override void Initialize(EntityContext context)
         {
             _context = context;
         }

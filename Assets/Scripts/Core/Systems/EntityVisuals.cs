@@ -1,11 +1,12 @@
 ﻿using System.Collections;
+using Abstractions;
 using Core.Entity;
 using Events.Entity;
 using UnityEngine;
 
 namespace Core.Systems
 {
-    public class EntityVisuals : MonoBehaviour, IEntitySystem
+    public class EntityVisuals : ContextDrivenComponent<EntityContext>
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
 
@@ -18,7 +19,7 @@ namespace Core.Systems
             _context.Events.Off<GracePeriodStartedEvent>(Flash);
         }
 
-        public void Initialize(EntityContext context)
+        public override void Initialize(EntityContext context)
         {
             _context = context;
 

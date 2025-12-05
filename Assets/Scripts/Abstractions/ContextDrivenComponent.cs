@@ -1,11 +1,11 @@
-﻿using Abstractions.Entity;
+﻿using Core.Entity;
 using UnityEngine;
 
 namespace Abstractions
 {
-    public abstract class DataDrivenComponent<T> : MonoBehaviour, IInitializable<T> where T : IEntityContext
+    public abstract class ContextDrivenComponent<T> : MonoBehaviour, IInitializable<T>
     {
-        public abstract void Initialize(T data);
+        public abstract void Initialize(T context);
     }
 
     public interface IInitializable <in T>
