@@ -1,3 +1,0 @@
-﻿namespace Gameplay.Weapons.Strategies
-{
-}
