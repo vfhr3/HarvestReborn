@@ -1,0 +1,34 @@
+﻿namespace Domain.Models
+{
+    public class GracePeriod
+    {
+        public GracePeriod(float duration)
+        {
+            Duration = duration;
+            IsActive = false;
+            Timer = 0f;
+        }
+
+        public bool IsActive { get; private set; }
+        public float Timer { get; private set; }
+        public float Duration { get; }
+
+        public void Start()
+        {
+            IsActive = true;
+            Timer = Duration;
+        }
+
+        public void Update(float deltaTime)
+        {
+            if (!IsActive) return;
+
+            Timer -= deltaTime;
+            if (Timer <= 0f)
+            {
+                IsActive = false;
+                Timer = 0f;
+            }
+        }
+    }
+}
