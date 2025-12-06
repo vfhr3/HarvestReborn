@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Presentation.Core.Systems
 {
-    public class EntityMovement : ContextDrivenComponent<Entity>
+    public class EntityMovement : EntityComponentView<Entity>
     {
         private Entity _entity;
         private Rigidbody2D _rb;

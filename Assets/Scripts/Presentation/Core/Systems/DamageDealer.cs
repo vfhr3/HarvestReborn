@@ -2,7 +2,7 @@
 
 namespace Presentation.Core.Systems
 {
-    public class DamageDealer : ContextDrivenComponent<Entity>
+    public class DamageDealer : EntityComponentView<Entity>
     {
         private Entity _context;
         
@@ -13,7 +13,6 @@ namespace Presentation.Core.Systems
 
         public override void Cleanup()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

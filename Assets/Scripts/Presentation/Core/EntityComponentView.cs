@@ -2,15 +2,16 @@
 
 namespace Presentation.Core
 {
-    public abstract class ContextDrivenComponent<T> : MonoBehaviour, IInitializable<T>
+    public abstract class EntityComponentView<T> : MonoBehaviour, IInitializable<T>
     {
-        public abstract void Initialize(T entity);
+        public abstract void Initialize(T context);
+
         public abstract void Cleanup();
     }
 
     public interface IInitializable <in T>
     {
-        public void Initialize(T entity);
+        public void Initialize(T context);
         public void Cleanup();
     }
 }

@@ -1,48 +1,25 @@
 ﻿using System.Collections;
-using Domain.Entities;
+using Domain.Entities.Interfaces;
 using Domain.Events.Entity;
 using UnityEngine;
 
 namespace Presentation.Core.Systems
 {
-    public class EntityVisuals : EntityComponentView<Entity>
+    public class GracePeriodView : EntityComponentView<IDamageable>
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
-
-        private Entity _context;
         private Coroutine _flashCoroutine;
-        private bool _isFacingRight = true;
         
-        public override void Initialize(Entity entity)
+        public override void Initialize(IDamageable context)
         {
-            _context = entity;
-
-            spriteRenderer ??= GetComponent<SpriteRenderer>();
-
-            _context.Events.On<DirectionChangedEvent>(Flip);
-            _context.Events.On<GracePeriodStartedEvent>(Flash);
+            
         }
 
         public override void Cleanup()
         {
-            _context.Events.Off<DirectionChangedEvent>(Flip);
-            _context.Events.Off<GracePeriodStartedEvent>(Flash);
+            
         }
-
-        private void Flip(DirectionChangedEvent e)
-        {
-            Debug.Log("Trying to flip...");
-            if (e.Direction.x > 0)
-            {
-                _isFacingRight = true;
-            }
-            else if (e.Direction.x < 0)
-            {
-                _isFacingRight = false;
-            }
-            spriteRenderer.flipX = !_isFacingRight;
-        }
-
+        
         private IEnumerator FlashCoroutine(float duration, float interval)
         {
             var elapsed = 0f;

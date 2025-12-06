@@ -2,10 +2,10 @@
 
 namespace Domain.StateMachine
 {
-    public interface IEntityState
+    public interface IEntityState<T>
     {
-        public void Enter(IEntity context);
-        public IEntityState Update(IEntity context, float deltaTime);
-        public void Exit(IEntity context);
+        public void Enter(T context);
+        public IEntityState<T> Update(T context, float deltaTime);
+        public void Exit(T context);
     }
 }

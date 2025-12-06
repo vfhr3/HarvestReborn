@@ -1,20 +1,18 @@
-﻿using Domain.Entities;
-
-namespace Domain.StateMachine
+﻿namespace Domain.StateMachine
 {
-    public class EntityStateMachine
+    public class EntityStateMachine<T>
     {
-        private readonly IEntity _context;
+        private readonly T _context;
 
-        public EntityStateMachine(IEntity context, IEntityState initialState)
+        public EntityStateMachine(T context, IEntityState<T> initialState)
         {
             _context = context;
             ChangeState(initialState);
         }
 
-        private IEntityState Current { get; set; }
+        private IEntityState<T> Current { get; set; }
 
-        private void ChangeState(IEntityState newState)
+        private void ChangeState(IEntityState<T> newState)
         {
             Current?.Exit(_context);
             Current = newState;

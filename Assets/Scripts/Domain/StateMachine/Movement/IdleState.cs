@@ -1,30 +1,28 @@
 ﻿using Domain.Entities;
+using Domain.Entities.Interfaces;
 using Domain.Events.Entity;
 using UnityEngine;
 
 namespace Domain.StateMachine.Movement
 {
-    public class IdleState : IEntityState
+    public class IdleState : IEntityState<IMoveable>
     {
-        public void Enter(IEntity context)
+
+        public void Enter(IMoveable context)
         {
-            Debug.Log("Entered Idle State");
-            context.Events.Emit(new MovementStoppedEvent());
         }
 
-        public IEntityState Update(IEntity context, float deltaTime)
+        public IEntityState<IMoveable> Update(IMoveable context, float deltaTime)
         {
             if (context.Direction.magnitude > 0)
             {
-                context.IsMoving = true;
                 return new MovingState();
             }
             return this;
         }
 
-        public void Exit(IEntity context)
+        public void Exit(IMoveable context)
         {
-            
         }
     }
 }

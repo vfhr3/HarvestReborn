@@ -12,7 +12,7 @@ namespace Infrastructure.Camera
 
         public void Start()
         {
-            _target = FindFirstObjectByType<Player>().transform;
+            _target = FindFirstObjectByType<PlayerView>().transform;
         }
 
         private void Update()
