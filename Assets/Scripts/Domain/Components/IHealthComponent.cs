@@ -1,13 +1,13 @@
 ﻿using Domain.Events;
 
-namespace Domain.Models
+namespace Domain.Components
 {
-    public interface IHealth
+    public interface IHealthComponent
     {
+        public IEventBus Events { get; }
         int Current { get; }
         int Max { get; }
         bool IsDead { get; }
-        IEventBus Events { get; }
 
         void ApplyDamage(int damage);
         void ApplyHeal(int amount);

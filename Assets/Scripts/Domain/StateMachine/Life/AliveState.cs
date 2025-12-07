@@ -1,21 +1,21 @@
-﻿using Domain.Models;
+﻿using Domain.Components;
 
 namespace Domain.StateMachine.Life
 {
-    public class AliveState : IEntityState<IHealth>
+    public class AliveState : IEntityState<IHealthComponent>
     {
-        public void Enter(IHealth context)
+        public void Enter(IHealthComponent context)
         {
             
         }
 
-        public IEntityState<IHealth> Update(IHealth context, float deltaTime)
+        public IEntityState<IHealthComponent> Update(IHealthComponent context, float deltaTime)
         {
             if (context.IsDead) return new DeadState();
             return this;
         }
 
-        public void Exit(IHealth context)
+        public void Exit(IHealthComponent context)
         {
             
         }

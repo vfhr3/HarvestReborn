@@ -4,19 +4,20 @@ using UnityEngine;
 
 namespace Presentation.Core.Systems
 {
-    public class EntityMovement : EntityComponentView<Entity>
+    public class EntityMovement : MonoBehaviour, IEntityComponentView<Entity>
     {
         private Entity _entity;
         private Rigidbody2D _rb;
 
-        public override void Initialize(Entity entity)
+        public void Initialize(Entity entity)
         {
+            Debug.Log($"Initialized {GetType().Name}");
             _entity = entity;
             _entity.Events.On<PositionChangedEvent>(Move);
             _rb = GetComponent<Rigidbody2D>();
         }
 
-        public override void Cleanup()
+        public void Cleanup()
         {
             _entity.Events.Off<PositionChangedEvent>(Move);
         }

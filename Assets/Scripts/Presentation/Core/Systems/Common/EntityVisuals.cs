@@ -3,9 +3,9 @@ using Domain.Entities;
 using Domain.Events.Entity;
 using UnityEngine;
 
-namespace Presentation.Core.Systems
+namespace Presentation.Core.Systems.Common
 {
-    public class EntityVisuals : EntityComponentView<Entity>
+    public class EntityVisuals : MonoBehaviour, IEntityComponentView<Entity>
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
 
@@ -13,7 +13,7 @@ namespace Presentation.Core.Systems
         private Coroutine _flashCoroutine;
         private bool _isFacingRight = true;
         
-        public override void Initialize(Entity entity)
+        public void Initialize(Entity entity)
         {
             _context = entity;
 
@@ -23,7 +23,7 @@ namespace Presentation.Core.Systems
             _context.Events.On<GracePeriodStartedEvent>(Flash);
         }
 
-        public override void Cleanup()
+        public void Cleanup()
         {
             _context.Events.Off<DirectionChangedEvent>(Flip);
             _context.Events.Off<GracePeriodStartedEvent>(Flash);

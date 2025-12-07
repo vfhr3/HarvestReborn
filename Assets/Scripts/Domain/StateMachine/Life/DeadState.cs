@@ -1,22 +1,23 @@
-﻿using Domain.Models;
+﻿using Domain.Components;
+using Domain.Events.Entity;
 
 namespace Domain.StateMachine.Life
 {
-    public class DeadState : IEntityState<IHealth>
+    public class DeadState : IEntityState<IHealthComponent>
     {
-        public void Enter(IHealth context)
+        public void Enter(IHealthComponent context)
         {
-            
+            context.Events.Emit(new DeathEvent());
         }
 
-        public IEntityState<IHealth> Update(IHealth context, float deltaTime)
+        public IEntityState<IHealthComponent> Update(IHealthComponent context, float deltaTime)
         {
             return this;
         }
 
-        public void Exit(IHealth context)
+        public void Exit(IHealthComponent context)
         {
-            
+            throw new System.NotImplementedException();
         }
     }
 }

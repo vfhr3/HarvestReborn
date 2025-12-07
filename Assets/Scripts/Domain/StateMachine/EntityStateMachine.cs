@@ -3,7 +3,8 @@
     public class EntityStateMachine<T>
     {
         private readonly T _context;
-
+        public T Context => _context;
+        
         public EntityStateMachine(T context, IEntityState<T> initialState)
         {
             _context = context;

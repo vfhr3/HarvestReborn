@@ -1,24 +1,14 @@
 ﻿using System.Collections;
-using Domain.Entities.Interfaces;
 using Domain.Events.Entity;
 using UnityEngine;
 
 namespace Presentation.Core.Systems
 {
-    public class GracePeriodView : EntityComponentView<IDamageable>
+    public class GracePeriodView : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         private Coroutine _flashCoroutine;
         
-        public override void Initialize(IDamageable context)
-        {
-            
-        }
-
-        public override void Cleanup()
-        {
-            
-        }
         
         private IEnumerator FlashCoroutine(float duration, float interval)
         {

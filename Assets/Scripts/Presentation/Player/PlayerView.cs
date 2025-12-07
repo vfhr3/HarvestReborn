@@ -1,3 +1,4 @@
+using System;
 using Domain.Entities.Player;
 using Presentation.Core;
 using UnityEngine;
@@ -5,17 +6,13 @@ using UnityEngine;
 
 namespace Presentation.Player
 {
-    public class PlayerView : EntityComponentView<PlayerEntity>
+    public class PlayerView : MonoBehaviour, IEntityComponentView<PlayerEntity>
     {
         private PlayerEntity _player;
-        public override void Initialize(PlayerEntity context)
+        
+        public void Initialize(PlayerEntity context)
         {
             _player = context;
-        }
-
-        public override void Cleanup()
-        {
-            
         }
 
         private void Update()
@@ -25,7 +22,12 @@ namespace Presentation.Player
 
         private void FixedUpdate()
         {
-            _player.FixedUpdate(Time.deltaTime);
+            _player.FixedUpdate(Time.fixedDeltaTime);
+        }
+
+        public void Cleanup()
+        {
+            
         }
     }
 }

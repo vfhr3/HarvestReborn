@@ -1,25 +1,12 @@
-﻿using Domain.Entities.Interfaces;
+﻿using Domain.Container;
 using Domain.Events;
-using Domain.Models;
 
 namespace Domain.Entities.Player
 {
-    public class PlayerEntity : Entity, IDamageable
+    public class PlayerEntity : Entity
     {
-        private IHealth _health;
-        public PlayerEntity(IEventBus events, IHealth health) : base(events)
+        public PlayerEntity(IEventBus events, EntityComponentContainer container) : base(events, container)
         {
-            _health = health;
-        }
-
-        public override void FixedUpdate(float fixedDeltaTime)
-        {
-            
-        }
-
-        public void TakeDamage(int damage)
-        {
-            _health.ApplyDamage(damage);
         }
     }
 }

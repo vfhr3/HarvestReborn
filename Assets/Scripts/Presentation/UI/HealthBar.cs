@@ -1,3 +1,4 @@
+using Domain.Components;
 using Domain.Events.Entity;
 using Domain.Models;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Presentation.UI
 {
     public class HealthBar : MonoBehaviour
     {
-        private IHealth _context;
+        private IHealthComponent _context;
         private VisualElement _hpFill;
         
         private float _maxHealth;
@@ -32,7 +33,7 @@ namespace Presentation.UI
             _context.Events.Off<HealthChangedEvent>(UpdateValue);
         }
 
-        public void Init(IHealth context)
+        public void Init(IHealthComponent context)
         {
             _context = context;
         }

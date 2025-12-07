@@ -1,27 +1,26 @@
-﻿using Domain.Entities.Interfaces;
-using UnityEngine;
+﻿using Domain.Components;
+using Domain.Events.Entity;
 
 namespace Domain.StateMachine.Movement
 {
-    public class MovingState: IEntityState<IMoveable>
+    public class MovingState: IEntityState<IMovementComponent>
     {
-        public void Enter(IMoveable context)
+        public void Enter(IMovementComponent context)
         {
-            Debug.Log($"Entered {GetType().Name}");
+            context.Events.Emit(new MovementStartedEvent());
         }
 
-        public IEntityState<IMoveable> Update(IMoveable context, float deltaTime)
+        public IEntityState<IMovementComponent> Update(IMovementComponent context, float deltaTime)
         {
-            if (context.Direction.sqrMagnitude == 0) 
-                return new IdleState();
-            
-            var newPosition = context.Position + context.Direction * context.Speed * deltaTime;
-            context.UpdatePosition(newPosition);
+            if (!context.IsMoving) return new IdleState();
+
+            var deltaPos = deltaTime * context.Speed * context.Direction;
+            context.Move(deltaPos);
             
             return this;
         }
 
-        public void Exit(IMoveable context)
+        public void Exit(IMovementComponent context)
         {
             
         }

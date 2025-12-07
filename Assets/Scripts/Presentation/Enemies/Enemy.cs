@@ -1,16 +1,17 @@
 ﻿using Domain.Entities.Enemy;
 using Presentation.Core;
+using UnityEngine;
 
 namespace Presentation.Enemies
 {
-    public class Enemy : EntityComponentView<EnemyEntity>
+    public class Enemy : MonoBehaviour, IEntityComponentView<EnemyEntity>
     {
-        public override void Initialize(EnemyEntity context)
+        public void Initialize(EnemyEntity context)
         {
             
         }
 
-        public override void Cleanup()
+        public void Cleanup()
         {
             
         }

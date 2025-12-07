@@ -2,16 +2,16 @@
 
 namespace Presentation.Core.Systems
 {
-    public class DamageDealer : EntityComponentView<Entity>
+    public class DamageDealer : IEntityComponentView<Entity>
     {
         private Entity _context;
         
-        public override void Initialize(Entity entity)
+        public void Initialize(Entity entity)
         {
             _context = entity;
         }
 
-        public override void Cleanup()
+        public void Cleanup()
         {
         }
     }
