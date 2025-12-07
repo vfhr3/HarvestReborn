@@ -1,4 +1,5 @@
 using Domain.Components;
+using Domain.Components.Interfaces;
 using Domain.Events.Entity;
 using Domain.Models;
 using UnityEngine;

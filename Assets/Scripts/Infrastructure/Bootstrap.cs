@@ -1,6 +1,8 @@
 ﻿using Domain.Components;
+using Domain.Components.Common;
 using Domain.Container;
 using Domain.Entities.Player;
+using Infrastructure.Components;
 using Infrastructure.Events;
 using Presentation.Enemies;
 using Presentation.Player;
@@ -19,14 +21,18 @@ namespace Infrastructure
         private PlayerView _playerView;
         private void Awake()
         {
-            EntityComponentContainer playerComponents = new EntityComponentContainer();
-            var playerEvents = new EventBus();
-            playerComponents.Add(new EntityHealthComponent(playerEvents));
-            playerComponents.Add(new EntityMovementComponent(playerEvents));
-            
-            PlayerEntity playerEntity = new PlayerEntity(playerEvents, playerComponents);
-
             var playerComponentView = Instantiate(playerViewPrefab, Vector3.zero, Quaternion.identity);
+            
+            var playerEvents = new EventBus();
+            EntityComponentContainer playerComponents = new EntityComponentContainer();
+            playerComponents.Add(new EntityHealthComponent(playerEvents));
+            playerComponents.Add(new TransformBasedMovementComponent(
+                playerEvents,
+                new UnityTransformProvider(playerComponentView.transform),
+                5));
+            PlayerEntity playerEntity = new PlayerEntity(playerEvents, playerComponents);
+            
+
             
             playerComponentView.Initialize(playerEntity);
         }

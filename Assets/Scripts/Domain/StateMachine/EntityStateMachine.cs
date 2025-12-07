@@ -13,7 +13,7 @@
 
         private IEntityState<T> Current { get; set; }
 
-        private void ChangeState(IEntityState<T> newState)
+        public void ChangeState(IEntityState<T> newState)
         {
             Current?.Exit(_context);
             Current = newState;

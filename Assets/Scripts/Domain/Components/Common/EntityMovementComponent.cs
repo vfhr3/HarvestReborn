@@ -1,4 +1,5 @@
-﻿using Domain.Events;
+﻿using Domain.Components.Interfaces;
+using Domain.Events;
 using Domain.Events.Entity;
 using Domain.StateMachine;
 using Domain.StateMachine.Movement;
@@ -11,7 +12,7 @@ namespace Domain.Components
         public IEventBus Events { get; }
         private readonly EntityStateMachine<IMovementComponent> _state;
         
-        public Vector2 Position { get; private set; }
+        public Vector2 Position { get; set; }
         public Vector2 Direction { get; private set; }
         public bool IsMoving => Direction.sqrMagnitude > 0;
         public float Speed { get; private set; }
@@ -54,17 +55,5 @@ namespace Domain.Components
         {
             
         }
-    }
-
-    public interface IMovementComponent
-    {
-        public IEventBus Events { get; }
-        public Vector2 Position { get; }
-        public Vector2 Direction { get; }
-        public bool IsMoving { get; }
-        public float Speed { get; }
-
-        public void Move(Vector2 delta);
-        public void UpdateDirection(Vector2 direction);
     }
 }
